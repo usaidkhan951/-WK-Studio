@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="WK Studio - Professional Wedding Photography & Cinematography in Karachi">
+    <title>WK Studio | Photography & Cinematography</title> 
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+    :root {
+        --primary: #ff4d00;
+        --dark: #0a0a0a;
+        --light: #f8f9fa;
+        --gray: #666;
+        --white: #ffffff;
+        --radius: 12px;
+        --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: var(--light);
+        color: #333;
+        line-height: 1.7;
+        overflow-x: hidden;
+        cursor: none;
+    }
+
+    
+    .loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--dark);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        transition: opacity 0.8s ease, visibility 0.8s;
+    }
+
+    .loader.hide {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    .loader-text {
+        font-family: 'Montserrat', sans-serif;
+        font-size: clamp(48px, 10vw, 100px);
+        font-weight: 800;
+        color: var(--white);
+        text-align: center;
+        animation: fadeInScale 1.2s ease-out;
+    }
+
+    .loader-text span {
+        color: var(--primary);
+    }
+
+    @keyframes fadeInScale {
+        from {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    .cursor {
+        width: 12px;
+        height: 12px;
+        background: var(--primary);
+        border-radius: 50%;
+        position: fixed;
+        pointer-events: none;
+        z-index: 9999;
+        transition: transform 0.15s ease-out;
+    }
+
+    .cursor-follower {
+        width: 40px;
+        height: 40px;
+        border: 2px solid var(--primary);
+        border-radius: 50%;
+        position: fixed;
+        pointer-events: none;
+        z-index: 9998;
+        opacity: 0.5;
+        transition: transform 0.3s ease-out;
+    }
+
+    img, video {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        border-radius: var(--radius);
+    }
+
+    header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        transition: var(--transition);
+    }
+
+    nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px 5%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 28px;
+        font-weight: 800;
+        color: var(--dark);
+    }
+
+    .logo span {
+        color: var(--primary);
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 40px;
+        list-style: none;
+    }
+
+    .nav-links a {
+        color: var(--dark);
+        text-decoration: none;
+        font-weight: 500;
+        transition: var(--transition);
+    }
+
+    .nav-links a:hover {
+        color: var(--primary);
+    }
+
+    .menu-toggle {
+        display: none;
+        background: none;
+        border: none;
+        font-size: 28px;
+        cursor: pointer;
+    }
+
+
+    .hero {
+        height: 100vh;
+        width: 100%;
+        background-image: url(wedding03.jpeg);
+        background-position: center;
+        background-size: cover;
+        background-attachment: fixed;
+        position: relative;
+        display: flex;
+        align-items: center;
+        padding: 0 8%;
+    }
+
+    .hero::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 100%);
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+        color: var(--white);
+        max-width: 800px;
+        animation: fadeUp 1s ease-out;
+    }
+
+    @keyframes fadeUp {
+        from {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .hero-content h1 {
+        font-family: 'Montserrat', sans-serif;
+        font-size: clamp(48px, 8vw, 90px);
+        font-weight: 800;
+        line-height: 1.1;
+        letter-spacing: -2px;
+        margin-bottom: 20px;
+    }
+
+    .hero-content p {
+        font-size: 20px;
+        color: #ddd;
+        margin-bottom: 40px;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 16px 40px;
+        background: var(--primary);
+        color: var(--white);
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: 600;
+        transition: var(--transition);
+    }
+
+    .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(255, 77, 0, 0.4);
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 120px 5%;
+    }
+
+    section {
+        margin-bottom: 120px;
+    }
+
+    .section-title {
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    .section-title h2 {
+        font-family: 'Montserrat', sans-serif;
+        font-size: clamp(36px, 5vw, 56px);
+        font-weight: 700;
+        color: var(--dark);
+        margin-bottom: 15px;
+    }
+
+    .section-title p {
+        font-size: 18px;
+        color: var(--gray);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+    }
+
+    .service-card {
+        background: var(--white);
+        padding: 40px 30px;
+        border-radius: var(--radius);
+        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        transition: var(--transition);
+        border: 2px solid transparent;
+    }
+
+    .service-card:hover {
+        transform: translateY(-10px);
+        border-color: var(--primary);
+        box-shadow: 0 15px 40px rgba(255, 77, 0, 0.15);
+    }
+
+    .service-card h4 {
+        font-size: 22px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: var(--dark);
+    }
+
+    
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    .gallery-item {
+        position: relative;
+        overflow: hidden;
+        border-radius: var(--radius);
+        cursor: pointer;
+    }
+
+    .gallery-item img {
+        transition: var(--transition);
+    }
+
+    .gallery-item:hover img {
+        transform: scale(1.1);
+    }
+
+    
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+    }
+
+    .feature-item {
+        display: flex;
+        gap: 15px;
+        align-items: flex-start;
+    }
+
+    .feature-icon {
+        font-size: 24px;
+        color: var(--primary);
+    }
+
+    
+    .contact-box {
+        background: linear-gradient(135deg, var(--primary) 0%, #ff7a00 100%);
+        color: var(--white);
+        padding: 40px;
+        border-radius: var(--radius);
+        text-align: center;
+        margin: 60px 0;
+    }
+
+    .contact-box h3 {
+        color: var(--white);
+        margin-bottom: 15px;
+    }
+
+    .contact-box p {
+        color: var(--white);
+        font-size: 24px;
+        font-weight: 600;
+    }
+
+    
+    form {
+        background: var(--white);
+        padding: 50px;
+        border-radius: var(--radius);
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    form label {
+        font-weight: 600;
+        color: var(--dark);
+        font-size: 15px;
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    form input, form select, form textarea {
+        width: 100%;
+        padding: 15px 20px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 15px;
+        font-family: 'Poppins', sans-serif;
+        margin-bottom: 25px;
+        transition: var(--transition);
+    }
+
+    form input:focus, form select:focus, form textarea:focus {
+        border-color: var(--primary);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(255,77,0,0.1);
+    }
+
+    form button {
+        width: 100%;
+        padding: 18px;
+        background: var(--primary);
+        color: var(--white);
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+    }
+
+    form button:hover {
+        background: #e64400;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(255,77,0,0.3);
+    }
+
+  
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--white);
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
+
+    table td {
+        padding: 20px;
+        text-align: center;
+        border: 1px solid #e0e0e0;
+        font-weight: 500;
+    }
+
+    table tr:first-child {
+        background: var(--primary);
+        color: var(--white);
+        font-weight: 700;
+    }
+
+  
+    footer {
+        background: var(--dark);
+        color: var(--white);
+        text-align: center;
+        padding: 60px 5%;
+    }
+
+    .footer-logo {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 36px;
+        font-weight: 800;
+        margin-bottom: 20px;
+    }
+
+    .social-links {
+        display: flex;
+        gap: 30px;
+        justify-content: center;
+        margin: 30px 0;
+    }
+
+    .social-links a {
+        color: var(--white);
+        text-decoration: none;
+        font-weight: 500;
+        transition: var(--transition);
+    }
+
+    .social-links a:hover {
+        color: var(--primary);
+    }
+
+   
+    .whatsapp-float {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: #25D366;
+        color: var(--white);
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        text-decoration: none;
+        box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
+        z-index: 100;
+        transition: var(--transition);
+    }
+
+    .whatsapp-float:hover {
+        transform: scale(1.1);
+    }
+
+  
+    .video-wrapper {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        border-radius: var(--radius);
+        box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    }
+
+    .video-wrapper video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+   
+    @media (max-width: 968px) {
+        body { cursor: default; }
+        .cursor, .cursor-follower { display: none; }
+
+        .nav-links {
+            position: fixed;
+            top: 70px;
+            right: -100%;
+            flex-direction: column;
+            background: var(--white);
+            width: 100%;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: var(--transition);
+        }
+
+        .nav-links.active {
+            right: 0;
+        }
+
+        .menu-toggle {
+            display: block;
+        }
+
+        .container {
+            padding: 80px 5%;
+        }
+
+        section {
+            margin-bottom: 80px;
+        }
+    }
+    </style>
+</head>
+<body>
+
+<div class="loader" id="loader">
+    <div class="loader-text">WK<span>Studio</span></div>
+</div>
+
+<div class="cursor"></div>
+<div class="cursor-follower"></div>
+
+<header>
+    <nav>
+        <div class="logo">WK<span>Studio</span></div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#work">Work</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button class="menu-toggle">☰</button>
+    </nav>
+</header>
+
+<section class="hero" id="home">
+    <div class="hero-content">
+        <h1>Capture Your Story</h1>
+        <p>Professional Wedding & Event Photography in Karachi</p>
+        <a href="#contact" class="btn">Book Your Shoot</a>
+    </div>
+</section>
+
+<div class="container">
+
+    <section id="about">
+        <div class="section-title">
+            <h2>Waseem Khan Studio</h2>
+            <p>Digital Movie & Photography - Capturing your special moments with cinematic quality</p>
+        </div>
+        
+        <div class="contact-box">
+            <h3>Call Us Now</h3>
+            <p>+92 312 2577929</p>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="section-title">
+            <h2>Our Services</h2>
+            <p>Complete photography solutions for every occasion</p>
+        </div>
+        
+        <div class="services-grid">
+            <div class="service-card">
+                <h4>Wedding Photography</h4>
+                <p>Full day coverage with cinematic videography and luxury albums.</p>
+            </div>
+            <div class="service-card">
+                <h4>Mehndi & Events</h4>
+                <p>Mehndi, Mayoon, Valima shoots with creative concepts.</p>
+            </div>
+            <div class="service-card">
+                <h4>Portrait Sessions</h4>
+                <p>Portfolio, model, and personal photoshoots.</p>
+            </div>
+            <div class="service-card">
+                <h4>Corporate Events</h4>
+                <p>Professional event coverage for businesses.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="work">
+        <div class="section-title">
+            <h2>Our Work</h2>
+            <p>Some glimpses from our recent shoots</p>
+        </div>
+        
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="wedding01.jpeg" alt="Wedding Shoot">
+            </div>
+            <div class="gallery-item">
+                <img src="wedding03.jpeg" alt="Event Photography">
+            </div>
+            <div class="gallery-item">
+                <img src="wedding04.jpeg" alt="Portrait">
+            </div>
+            <div class="gallery-item">
+                <img src="_.jpeg" alt="Studio Work">
+            </div>
+            <div class="gallery-item">
+                <img src="class01.jpeg" alt="Studio Work">
+            </div>
+            <div class="gallery-item">
+                <img src="_ (1).jpeg" alt="Studio Work">
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="section-title">
+            <h2>Why Choose WK Studio?</h2>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-item">
+                <span class="feature-icon">✓</span>
+                <div>
+                    <h4>100+ Happy Clients</h4>
+                    <p>Trusted by hundreds of satisfied customers</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">✓</span>
+                <div>
+                    <h4>On-Time Delivery</h4>
+                    <p>We respect your time and deadlines</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">✓</span>
+                <div>
+                    <h4>Creative Editing</h4>
+                    <p>Cinematic color grading and retouching</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">✓</span>
+                <div>
+                    <h4>High Quality Equipment</h4>
+                    <p>Professional cameras and lighting gear</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="section-title">
+            <h2>Watch Our Work</h2>
+            <p>Cinematic moments captured in motion</p>
+        </div>
+        <div class="video-wrapper">
+            <video src="movie.mp4" controls muted loop></video>
+        </div>
+    </section>
+    
+    <section>
+    <div class="section-title">
+        <h2>Our Location</h2>
+    </div>
+    <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3620.123456789!2d67.0100!3d24.8607!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb33e06651d4bbf%3A0x9cf92f44555a0c23!2sKarachi%2C%20Pakistan!5e0!3m2!1sen!2s!4v1690000" 
+        width="100%" 
+        height="400" 
+        style="border:0; border-radius: 12px;" 
+        loading="lazy">
+    </iframe>
+     </section> 
+
+    <section>
+        <div class="section-title">
+            <h2>Studio Timings</h2>
+        </div>
+        <table>
+          <tr>
+            <td>Monday</td>
+            <td>Tuesday</td>
+            <td>Wednesday</td>
+            <td>Thursday</td>
+            <td>Friday</td>
+            <td>Saturday</td>
+            <td>Sunday</td>
+          </tr>
+          <tr>
+            <td colspan="7">11:00 AM - 09:00 PM</td>
+          </tr>
+        </table>
+    </section>
+
+    <section id="contact">
+        <div class="section-title">
+            <h2>Book Your Shoot</h2>
+            <p>Fill this form and we'll contact you within 2 hours</p>
+        </div>
+        
+        <form id="contactForm">
+            <label for="fullname">Full Name</label>
+            <input type="text" name="fullname" id="fullname" placeholder="Enter Your Full Name" required>
+
+            <label for="phone">Phone Number</label>
+            <input type="tel" name="phone" id="phone" placeholder="0312 2577929" required>
+
+            <label for="email">Email Address</label>
+            <input type="email" name="email" id="email" placeholder="your.email@gmail.com" required>
+
+            <label for="eventtype">Event Type</label>
+            <select name="eventtype" id="eventtype" required>
+                <option value="">Select Event Type</option>
+                <option value="wedding">Wedding Shoot</option>
+                <option value="mehndi">Mehndi / Mayoon</option>
+                <option value="valima">Valima</option>
+                <option value="birthday">Birthday Party</option>
+                <option value="portfolio">Portfolio Shoot</option>
+                <option value="corporate">Corporate Event</option>
+            </select>
+
+            <label for="eventdate">Event Date</label>
+            <input type="date" name="eventdate" id="eventdate" required>
+
+            <label for="location">Event Location</label>
+            <input type="text" name="location" id="location" placeholder="e.g. Karachi, DHA Phase 6" required>
+
+            <label for="message">Message / Details</label>
+            <textarea name="message" id="message" rows="4" placeholder="Tell us about your event"></textarea>
+
+            <button type="submit">Send Booking Request</button>
+        </form>
+    </section>
+
+</div>
+
+<a href="https://wa.me/923122577929" class="whatsapp-float" target="_blank">💬</a>
+
+<footer>
+    <div class="footer-logo">WK<span style="color: var(--primary);">Studio</span></div>
+    <div class="social-links">
+        <a href="https://www.instagram.com/waseem_khan_studio" target="_blank">Instagram</a>
+    </div>
+    <p>© 2026 WK Studio. All Rights Reserved.</p>
+</footer>
+
+<script>
+    
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            document.getElementById('loader').classList.add('hide');
+        }, 2000);
+    });
+
+   
+    const cursor = document.querySelector('.cursor');
+    const cursorFollower = document.querySelector('.cursor-follower');
+
+    document.addEventListener('mousemove', (e) => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+        setTimeout(() => {
+            cursorFollower.style.left = e.clientX + 'px';
+            cursorFollower.style.top = e.clientY + 'px';
+        }, 100);
+    });
+
+    document.querySelectorAll('a, button, .gallery-item').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            cursor.style.transform = 'scale(1.5)';
+            cursorFollower.style.transform = 'scale(1.5)';
+        });
+        el.addEventListener('mouseleave', () => {
+            cursor.style.transform = 'scale(1)';
+            cursorFollower.style.transform = 'scale(1)';
+        });
+    });
+
+    
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    
+    menuToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+                navLinks.classList.remove('active');
+            }
+        });
+    });
+
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const message = `Hi WK Studio! 
+Name: ${formData.get('fullname')}
+Phone: ${formData.get('phone')}
+Event: ${formData.get('eventtype')}
+Date: ${formData.get('eventdate')}
+Location: ${formData.get('location')}
+Message: ${formData.get('message')}`;
+        
+        window.open(`https://wa.me/923122577929?text=${encodeURIComponent(message)}`, '_blank');
+        alert('Redirecting to WhatsApp. Please send the message there.');
+        this.reset();
+    });
+</script>
+
+</body>
+</html>
